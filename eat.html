@@ -56,7 +56,7 @@
             box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
             transform: scale(0);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             z-index: 3;
             border: 3px solid white;
@@ -100,7 +100,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             font-weight: bold;
             opacity: 0.3;
-            transition: all 0.5s ease;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
             z-index: 1;
             transform-origin: center;
@@ -116,7 +116,7 @@
 
         @keyframes pulse {
             from { transform: scale(1.5); }
-            to { transform: scale(1.6); }
+            to { transform: scale(1.55); }
         }
 
         @keyframes float {
@@ -124,17 +124,17 @@
                 transform: translate(0, 0) rotate(0deg);
                 opacity: 0;
             }
-            10% {
+            20% {
                 opacity: 0.3;
             }
             50% {
                 transform: translate(var(--x-move), var(--y-move)) rotate(var(--rotation));
             }
-            90% {
+            80% {
                 opacity: 0.3;
             }
             100% {
-                transform: translate(calc(var(--x-move) * 1.5), calc(var(--y-move) * 1.5)) rotate(calc(var(--rotation) * 1.5));
+                transform: translate(calc(var(--x-move) * 1.2), calc(var(--y-move) * 1.2)) rotate(calc(var(--rotation) * 1.2));
                 opacity: 0;
             }
         }
@@ -179,11 +179,11 @@
         .input-group {
             display: none;
             margin-bottom: 15px;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -293,8 +293,35 @@
     <script>
         // 初始美食列表
         let items = [
-            "麻辣香锅", "烤肉拌饭", "米饭", "汉堡", 
-            "拉面", "米线", "咖喱饭", "麻辣烫"
+            // 中式主食  
+            "米饭", "蛋炒饭", "扬州炒饭", "菠萝炒饭", "咖喱炒饭", "腊味煲仔饭", "卤肉饭", "黄焖鸡米饭",  
+            "盖浇饭", "石锅拌饭", "牛肉饭", "鳗鱼饭", "茶泡饭", "寿司", "刺身", "紫菜包饭",  
+            "拉面", "豚骨拉面", "味噌拉面", "乌冬面", "荞麦面", "冷面", "炸酱面", "刀削面",  
+            "牛肉面", "热干面", "担担面", "葱油拌面", "酸辣粉", "螺蛳粉", "米线", "过桥米线",  
+            "肠粉", "河粉", "干炒牛河", "饺子", "蒸饺", "煎饺", "锅贴", "馄饨",  
+            "小笼包", "生煎包", "叉烧包", "烧麦", "糯米鸡", "煎饼果子", "手抓饼", "葱油饼",  
+            "肉夹馍", "驴肉火烧",  
+
+            // 西式主食  
+            "汉堡", "芝士汉堡", "热狗", "三明治", "金枪鱼三明治", "法棍三明治", "披萨", "玛格丽特披萨",  
+            "海鲜披萨", "夏威夷披萨", "意大利面", "番茄肉酱意面", "奶油培根意面", "千层面", "通心粉",  
+            "墨西哥卷饼", "塔可", "玉米饼", "印度飞饼", "烤饼", "馕",  
+
+            // 日韩料理  
+            "韩式拌饭", "照烧鸡排饭", "亲子丼", "牛丼", "加州卷", "军舰卷", "地狱拉面",  
+            "韩式烤肉", "日式烧肉", "大阪烧", "天妇罗", "炸猪排", "咖喱饭", "咖喱乌冬",  
+
+            // 东南亚及其他  
+            "越南河粉", "泰式炒河粉", "冬阴功炒饭", "海南鸡饭", "肉骨茶", "叻沙", "越南春卷",  
+
+            // 中式炒菜/烧烤类（可作主食搭配）  
+            "麻辣香锅", "麻辣烫", "火锅", "串串香", "冒菜", "干锅", "烤鱼", "烤肉",  
+            "巴西烤肉", "土耳其烤肉", "烤全羊", "烤鸡", "烤鸭", "烧鹅", "白切鸡",  
+            "三杯鸡", "大盘鸡", "辣子鸡", "宫保鸡丁", "口水鸡", "回锅肉", "红烧肉",  
+            "糖醋排骨", "梅菜扣肉", "东坡肉", "粉蒸肉", "水煮鱼", "酸菜鱼", "清蒸鱼",  
+            "剁椒鱼头", "椒盐虾", "油焖大虾", "香辣蟹", "清蒸螃蟹", "蒜蓉粉丝蒸扇贝",  
+            "烤生蚝", "炒花甲", "爆炒鱿鱼", "孜然羊肉", "葱爆羊肉", "羊肉串", "牛肉串",  
+            "关东煮", "章鱼烧"  
         ];
 
         const result = document.getElementById('result');
@@ -455,11 +482,11 @@
                     spinBtn.disabled = false;
                     createConfetti();
                     
-                    // 移除高亮效果
+                    // 延长高亮效果持续时间
                     setTimeout(() => {
                         selectedItem.classList.remove('highlight');
-                    }, 2000);
-                }, 500);
+                    }, 3000);
+                }, 800);
             }
         }
 
